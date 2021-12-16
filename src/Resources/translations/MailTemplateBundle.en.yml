@@ -1,0 +1,4 @@
+email:
+    greeting_unkown_user: 'Welcome!'
+    greeting: 'Welcome %userName%!'
+    signature: 'Regards: %signatory%'

@@ -1,0 +1,32 @@
+{
+    "name": "eightmarq/mail-template-bundle",
+    "description": "Mail template bundle is help to build emails easily.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Norbert Schvoy",
+            "email": "norbert.schvoy@eightmarq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EightMarq\\MailTemplateBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { "EightMarq\\MailTemplateBundle\\Tests\\": "tests/" }
+    },
+    "require": {
+        "php": "^8.0",
+        "symfony/framework-bundle": "^5.3",
+        "symfony/translation": "^5.3",
+        "symfony/twig-bundle": "^5.3",
+        "tijsverkoyen/css-to-inline-styles": "^2.2.4",
+        "symfony/mailer": "^6.0",
+        "eightmarq/core-bundle": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}

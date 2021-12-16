@@ -1,0 +1,41 @@
+{# @var __mailType \EightMarq\MailTemplateBundle\Mailer\MailTypeInterface #}
+<!DOCTYPE html>
+<html lang="{{ __locale }}">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{{ __mailType.subject | trans(parameters, __translationDomain, __locale) }}</title>
+    </head>
+    <body>
+        <table>
+            {% block header %}
+                <tr>
+                    <td>
+                        {% if __greeting is defined and __greeting is not same as (false) %}
+                            {% if __userName is not same as (false) %}
+                                <h1>{{ 'email.greeting' | trans(parameters, __translationDomain, __locale) }}</h1>
+                            {% else %}
+                                <h1>{{ 'email.greeting_unkown_user' | trans(parameters, __translationDomain, __locale) }}</h1>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endblock %}
+            {% block body %}
+                <tr>
+                    <td>
+                        <p>{{ __mailType.body | trans(parameters, __translationDomain, __locale) | raw }}</p>
+                    </td>
+                </tr>
+            {% endblock %}
+            {% block footer %}
+                <tr>
+                    <td>
+                        {% if __signature is defined and __signature is not same as (false) %}
+                            <p>{{ 'email.signature' | trans(parameters, __translationDomain, __locale) }}</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endblock %}
+        </table>
+    </body>
+</html>

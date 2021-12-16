@@ -1,0 +1,19 @@
+parameters:
+    mailer_signatory: '%env(MAILER_SIGNATORY)%'
+    mailer_sender_address: '%env(MAILER_SENDER_ADDRESS)%'
+    mailer_sender_name: '%env(MAILER_SENDER_NAME)%'
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    EightMarq\MailTemplateBundle\:
+        resource: '../../../src/*'
+        exclude:
+            - '../../../src/{DependencyInjection,Entity,Events,Model,Repository,Resources}'
+
+    EightMarq\MailTemplateBundle\Mailer\MailSender:
+        public: true
