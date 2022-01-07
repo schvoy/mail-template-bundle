@@ -8,8 +8,17 @@ Mail template bundle helps to build and send emails from different source (Twig 
 
 ## Installation
 
+### Install via composer 
 ```bash
 composer require eightmarq/mail-template-bundle
+```
+
+### Register templates in twig configuration 
+```yaml 
+twig:
+    ...
+    paths:
+        '%kernel.project_dir%/vendor/eightmarq/mail-template-bundle/src/Resources/views': MailTemplateBundle
 ```
 
 ## Environment variables

@@ -72,7 +72,7 @@ class MailSender
                             $this->parameterBag->get('mailer_sender_name')
                         )
                     )
-                    ->to(new Address($recipient->getEmail(), $recipient->getName()))
+                    ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))
                     ->subject(
                         $this->translator->trans(
                             $mailType->getSubject(),
