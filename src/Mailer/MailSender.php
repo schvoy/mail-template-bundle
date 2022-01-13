@@ -69,7 +69,7 @@ class MailSender
                     ->from(
                         new Address(
                             $this->parameterBag->get('mailer_sender_address'),
-                            $this->parameterBag->get('mailer_sender_name')
+                            $this->parameterBag->get('mailer_sender_name') ?? ''
                         )
                     )
                     ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))

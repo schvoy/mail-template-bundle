@@ -1,10 +1,17 @@
 # Changelog
 
+## 0.5.2
+
+### Changed
+
+- Use empty string instead of null value as sender name when it's not defined
+- Fix typo in change log 
+
 ## 0.5.1
 
 ### Changed
 
-- Use empty sting instead of null value as recipient name when it's not defined
+- Use empty string instead of null value as recipient name when it's not defined
 - Add install information to README.md
 
 ## 0.5.0
