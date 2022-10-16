@@ -4,7 +4,7 @@ Mail template bundle helps to build and send emails from different source (Twig 
 
 ## Requirements
 
-> Important! PHP 8 is required for this bundle, because in this bundle we use typed properties feature!
+> Important! PHP 8.1 is required for this bundle, because in this bundle we use typed properties feature!
 
 ## Installation
 

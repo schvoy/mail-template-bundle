@@ -18,12 +18,12 @@
         "psr-4": { "EightMarq\\MailTemplateBundle\\Tests\\": "tests/" }
     },
     "require": {
-        "php": "^8.0",
-        "symfony/framework-bundle": "^5.3",
-        "symfony/translation": "^5.3",
-        "symfony/twig-bundle": "^5.3",
+        "php": "^8.1",
+        "symfony/framework-bundle": "^6.1",
+        "symfony/translation": "^6.1",
+        "symfony/twig-bundle": "^6.1",
         "tijsverkoyen/css-to-inline-styles": "^2.2.4",
-        "symfony/mailer": "^6.0",
+        "symfony/mailer": "^6.1",
         "eightmarq/core-bundle": "dev-master"
     },
     "require-dev": {

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0
+
+### Changed
+
+- Update required Symfony version to 6.1 and PHP version to 8.1
+
 ## 0.5.2
 
 ### Changed
