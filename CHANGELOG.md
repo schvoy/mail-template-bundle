@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.1
+
+### Changed
+
+- Update composer.json requirements
+
 ## 0.6.0
 
 ### Changed
