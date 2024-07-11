@@ -10,10 +10,10 @@ services:
         autoconfigure: true
         public: false
 
-    EightMarq\MailTemplateBundle\:
+    Schvoy\MailTemplateBundle\:
         resource: '../../../src/*'
         exclude:
-            - '../../../src/{DependencyInjection,Entity,Events,Model,Repository,Resources}'
+            - '../../../src/{DependencyInjection,Exceptions,Resources}'
 
-    EightMarq\MailTemplateBundle\Mailer\MailSender:
+    Schvoy\MailTemplateBundle\Mailer\MailSender:
         public: true

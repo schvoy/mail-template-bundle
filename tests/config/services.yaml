@@ -1,0 +1,24 @@
+parameters:
+    env(DB_ENGINE): 'pdo_sqlite'
+    env(DB_HOST): 'localhost'
+    env(DB_NAME): 'core_test'
+    env(DB_USER): 'root'
+    env(DB_PASSWD): ''
+    env(DB_MEMORY): 'true'
+    env(MAILER_SENDER_ADDRESS): 'test@example.com'
+    env(MAILER_SENDER_NAME): 'Mail sender name'
+    env(MAILER_SIGNATORY): 'Mail signatory'
+    kernel.secret: 'test_secret'
+    locale: 'en'
+
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+
+    Schvoy\MailTemplateBundle\Tests\Services\:
+        resource: '../Services/'
+
+    Schvoy\MailTemplateBundle\Tests\Fixtures\Email\:
+        resource: '../Fixtures/Email'

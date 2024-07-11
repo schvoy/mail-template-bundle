@@ -1,5 +1,5 @@
 {
-    "name": "eightmarq/mail-template-bundle",
+    "name": "schvoy/mail-template-bundle",
     "description": "Mail template bundle is help to build emails easily.",
     "type": "symfony-bundle",
     "license": "MIT",
@@ -11,22 +11,45 @@
     ],
     "autoload": {
         "psr-4": {
-            "EightMarq\\MailTemplateBundle\\": "src/"
+            "Schvoy\\MailTemplateBundle\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": { "EightMarq\\MailTemplateBundle\\Tests\\": "tests/" }
+        "psr-4": { "Schvoy\\MailTemplateBundle\\Tests\\": "tests/" }
     },
     "require": {
-        "php": "^8.1",
-        "symfony/framework-bundle": "^6.1",
-        "symfony/translation": "^6.1",
-        "symfony/twig-bundle": "^6.1",
-        "tijsverkoyen/css-to-inline-styles": "^2.2.4",
-        "symfony/mailer": "^6.1",
-        "eightmarq/core-bundle": "^0.8"
+        "php": ">=8.3",
+        "symfony/framework-bundle": "^7.1",
+        "symfony/translation": "^7.1",
+        "symfony/twig-bundle": "^7.1",
+        "tijsverkoyen/css-to-inline-styles": "^2.2.7",
+        "symfony/mailer": "^7.1",
+        "schvoy/base-entity-bundle": "^1.0.0",
+        "twig/twig": "^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^11.1",
+        "friendsofphp/php-cs-fixer": "^3.58",
+        "symfony/yaml": "^7.1",
+        "symfony/runtime": "^7.1"
+    },
+    "scripts": {
+        "before-commit": [
+            "vendor/bin/php-cs-fixer fix src",
+            "vendor/bin/php-cs-fixer fix tests",
+            "vendor/bin/phpunit"
+        ],
+        "code-quality": [
+            "vendor/bin/php-cs-fixer fix --dry-run src",
+            "vendor/bin/php-cs-fixer fix --dry-run tests"
+        ],
+        "tests": [
+            "vendor/bin/phpunit"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/runtime": true
+        }
     }
 }

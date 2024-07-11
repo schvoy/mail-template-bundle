@@ -1,25 +1,16 @@
 <?php
 
-/**
- * This file is part of the EightMarq Symfony bundles.
- *
- * (c) Norbert Schvoy <norbert.schvoy@eightmarq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
-namespace EightMarq\MailTemplateBundle\Mailer;
+namespace Schvoy\MailTemplateBundle\Mailer;
 
-use EightMarq\MailTemplateBundle\Mailer\Engine\MailEngineInterface;
-
-abstract class AbstractMailType implements MailTypeInterface, MailEngineInterface
+abstract class AbstractMailType implements MailTypeInterface
 {
     protected string $subject;
 
     protected string $body;
+
+    protected array $configuration = [];
 
     public function getSubject(): string
     {
@@ -39,5 +30,15 @@ abstract class AbstractMailType implements MailTypeInterface, MailEngineInterfac
     public function setBody(string $body): void
     {
         $this->body = $body;
+    }
+
+    public function getConfiguration(): array
+    {
+        return $this->configuration;
+    }
+
+    public function setConfiguration(array $configuration): void
+    {
+        $this->configuration = $configuration;
     }
 }

@@ -1,27 +1,30 @@
-# EightMarq - Mail template bundle
+# Mail template bundle
 
 Mail template bundle helps to build and send emails from different source (Twig or Database).
 
 ## Requirements
 
-> Important! PHP 8.1 is required for this bundle, because in this bundle we use typed properties feature!
+> PHP 8.3
 
+> Symfony 7.1
+> 
 ## Installation
 
 ### Install via composer 
 ```bash
-composer require eightmarq/mail-template-bundle
+composer require schvoy/mail-template-bundle
 ```
 
 ### Register templates in twig configuration 
+
 ```yaml 
 twig:
     ...
     paths:
-        '%kernel.project_dir%/vendor/eightmarq/mail-template-bundle/src/Resources/views': MailTemplateBundle
+        '%kernel.project_dir%/vendor/schvoy/mail-template-bundle/src/Resources/views': MailTemplateBundle
 ```
 
-## Environment variables
+## Define the required environment variables
 
 * MAILER_SENDER_ADDRESS
 * MAILER_SENDER_NAME
@@ -55,8 +58,8 @@ declare(strict_types=1);
 
 namespace App\Mails;
 
-use EightMarq\MailTemplateBundle\Mailer\AbstractMailType;
-use EightMarq\MailTemplateBundle\Mailer\Engine\TwigBased;
+use Schvoy\MailTemplateBundle\Mailer\AbstractMailType;
+use Schvoy\MailTemplateBundle\Mailer\Engine\TwigBased;
 
 class TestMailType extends AbstractMailType
 {

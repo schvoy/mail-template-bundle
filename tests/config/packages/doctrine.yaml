@@ -1,0 +1,16 @@
+doctrine:
+    dbal:
+        dbname: '%env(DB_NAME)%'
+        host: '%env(DB_HOST)%'
+        user: '%env(DB_USER)%'
+        password: '%env(DB_PASSWD)%'
+        driver: '%env(DB_ENGINE)%'
+        memory: '%env(bool:DB_MEMORY)%'
+    orm:
+        auto_mapping: true
+        mappings:
+            MailTemplateBundle:
+                is_bundle: true
+                type: attribute
+                dir: '../tests/Fixtures/Entity'
+                prefix: 'Schvoy\MailTemplateBundle\Tests\Fixtures\Entity\'

@@ -1,0 +1,3 @@
+test_email:
+    subject: 'This is a test email'
+    body: 'Content of the test email.'

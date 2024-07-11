@@ -1,20 +1,11 @@
 <?php
 
-/**
- * This file is part of the EightMarq Symfony bundles.
- *
- * (c) Norbert Schvoy <norbert.schvoy@eightmarq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
-namespace EightMarq\MailTemplateBundle\Mailer;
+namespace Schvoy\MailTemplateBundle\Mailer;
 
-use EightMarq\MailTemplateBundle\DependencyInjection\MailTemplateExtension;
-use EightMarq\MailTemplateBundle\Exceptions\MailTypeNotFoundException;
+use Schvoy\MailTemplateBundle\DependencyInjection\MailTemplateExtension;
+use Schvoy\MailTemplateBundle\Exceptions\MailTypeNotFoundException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -23,25 +14,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MailSender
 {
-    const DEFAULT_LOCALE = 'en';
-
-    protected array $mailTypes = [];
-
-    protected TranslatorInterface $translator;
-
-    protected ParameterBagInterface $parameterBag;
-
-    protected MailerInterface $mailer;
+    private const string DEFAULT_LOCALE = 'en';
+    private array $mailTypes = [];
 
     public function __construct(
-        TranslatorInterface $translator,
-        ParameterBagInterface $parameterBag,
-        MailerInterface $mailer
-    )
-    {
-        $this->translator = $translator;
-        $this->parameterBag = $parameterBag;
-        $this->mailer = $mailer;
+        private readonly TranslatorInterface $translator,
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly MailerInterface $mailer
+    ) {
     }
 
     public function getMailType(string $mailTypeName): MailTypeInterface
@@ -58,42 +38,50 @@ class MailSender
         $this->mailTypes[get_class($mailType)] = $mailType;
     }
 
-    public function send(MailTypeInterface $mailType, array $recipients = [], array $configuration = [])
+    public function send(MailTypeInterface $mailType, array $recipients = [], array $configuration = []): void
     {
-        if (count($recipients) > 0) {
-            /** @var Recipient $recipient */
-            foreach ($recipients as $recipient) {
-                $configuration = $this->getEmailConfiguration($mailType, $configuration, $recipient);
-
-                $email = (new Email())
-                    ->from(
-                        new Address(
-                            $this->parameterBag->get('mailer_sender_address'),
-                            $this->parameterBag->get('mailer_sender_name') ?? ''
-                        )
-                    )
-                    ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))
-                    ->subject(
-                        $this->translator->trans(
-                            $mailType->getSubject(),
-                            $configuration['parameters'],
-                            $configuration['__translationDomain'],
-                            $configuration['__locale']
-                        )
-                    )
-                    ->html($mailType->getContent($configuration));
-
-                $this->mailer->send($email);
-            }
+        if (count($recipients) === 0) {
+            return;
         }
+
+        /** @var Recipient $recipient */
+        foreach ($recipients as $recipient) {
+            $email = $this->getEmail($mailType, $recipient, $configuration);
+
+            $this->mailer->send($email);
+        }
+    }
+
+    protected function getEmail(MailTypeInterface $mailType, Recipient $recipient, array $configuration): Email
+    {
+        $configuration = $this->getEmailConfiguration($mailType, $recipient, $configuration);
+
+        $email = (new Email())
+            ->from(
+                new Address(
+                    $this->parameterBag->get('mailer_sender_address'),
+                    $this->parameterBag->get('mailer_sender_name') ?? ''
+                )
+            )
+            ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))
+            ->subject(
+                $this->translator->trans(
+                    $mailType->getSubject(),
+                    $configuration['parameters'],
+                    $configuration['__translationDomain'],
+                    $configuration['__locale']
+                )
+            )
+            ->html($mailType->getContent($configuration));
+
+        return $email;
     }
 
     protected function getEmailConfiguration(
         MailTypeInterface $mailType,
-        array $configuration,
-        Recipient $recipient
-    ): array
-    {
+        Recipient $recipient,
+        array $configuration = []
+    ): array {
         return array_replace_recursive(
             [
                 '__greeting' => true,
@@ -109,6 +97,7 @@ class MailSender
                     '%signatory%' => $this->parameterBag->get('mailer_signatory'),
                 ],
             ],
+            $mailType->getConfiguration(),
             $configuration
         );
     }

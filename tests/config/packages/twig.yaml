@@ -1,0 +1,3 @@
+twig:
+    paths:
+        '../src/resources/views': 'MailTemplateBundle'

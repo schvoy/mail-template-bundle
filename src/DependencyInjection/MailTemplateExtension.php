@@ -1,42 +1,21 @@
 <?php
 
-/**
- * This file is part of the EightMarq Symfony bundles.
- *
- * (c) Norbert Schvoy <norbert.schvoy@eightmarq.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 declare(strict_types=1);
 
-namespace EightMarq\MailTemplateBundle\DependencyInjection;
+namespace Schvoy\MailTemplateBundle\DependencyInjection;
 
-use EightMarq\CoreBundle\DependencyInjection\AbstractExtension;
-use Exception;
+use Schvoy\BaseEntityBundle\DependencyInjection\AbstractExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class MailTemplateExtension extends AbstractExtension
 {
-    const ALIAS = 'mail_template_bundle';
+    public const string ALIAS = 'mail_template_bundle';
 
-    /**
-     * Loads a specific configuration.
-     *
-     * @param array $configs
-     * @param ContainerBuilder $container
-     *
-     * @throws Exception
-     */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader(
-            $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
-        );
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services.yaml');
 
