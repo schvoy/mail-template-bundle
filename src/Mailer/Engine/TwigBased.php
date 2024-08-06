@@ -28,21 +28,21 @@ trait TwigBased
 
     public function getContent(array $configuration = []): string
     {
+        $baseTemplateParameter = sprintf('%s.%s', MailTemplateExtension::ALIAS, 'email_base_template');
+        $baseCssParameter = sprintf('%s.%s', MailTemplateExtension::ALIAS, 'email_base_css_template');
+
         $html = $this->twig->render(
-            $this->parameterBag->get(
-                sprintf('%s.%s', MailTemplateExtension::ALIAS, 'email_base_template')
-            ),
+            $this->getTemplatePath() ?? $this->parameterBag->get($baseTemplateParameter),
             $configuration
         );
 
-        $cssToInlineStyles = new CssToInlineStyles();
+        $css = file_get_contents($this->parameterBag->get($baseCssParameter));
 
-        $css = file_get_contents(
-            $this->parameterBag->get(
-                sprintf('%s.%s', MailTemplateExtension::ALIAS, 'email_base_css_template')
-            )
-        );
+        return (new CssToInlineStyles())->convert($html, $css);
+    }
 
-        return $cssToInlineStyles->convert($html, $css);
+    protected function getTemplatePath(): string|null
+    {
+        return null;
     }
 }

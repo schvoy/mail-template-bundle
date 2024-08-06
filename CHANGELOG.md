@@ -12,6 +12,7 @@
 * Add test environment for PhpUnit tests
 * Add tests for TwigBasedEmails
 * Add `before-commit`, `code-quality` and `tests` composer scripts
+* Allow to change email template for the email templates one by one
 * Update README.md
 
 ## 0.6.1
