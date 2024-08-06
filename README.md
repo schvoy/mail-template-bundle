@@ -2,12 +2,6 @@
 
 Mail template bundle helps to build and send emails from different source (Twig or Database).
 
-## Requirements
-
-> PHP 8.3
-
-> Symfony 7.1
-> 
 ## Installation
 
 ### Install via composer 
