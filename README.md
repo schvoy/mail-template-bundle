@@ -84,7 +84,7 @@ $mailSender->send(
 );
 ```
 
-### Default email (template) configuration
+### Default email (template) parameters
 
 ```php
 [
