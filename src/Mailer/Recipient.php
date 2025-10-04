@@ -33,4 +33,4 @@ class Recipient
     {
         return $this->bcc;
     }
-    }
+}
