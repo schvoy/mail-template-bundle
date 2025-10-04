@@ -1,4 +1,4 @@
 email:
-    greeting_unkown_user: 'Üdvözöljük!'
-    greeting: 'Üdvözöljük %userName%!'
+    greeting_unknown_user: 'Üdvözöljük!'
+    greeting: 'Kedves %userName%,'
     signature: 'Üdvözlettel: %signatory%'

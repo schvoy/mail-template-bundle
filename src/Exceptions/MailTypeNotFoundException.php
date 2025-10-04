@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MailTypeNotFoundException extends Exception
 {
-    protected $message = 'Mail type doesn\'t exist';
+    protected $message = 'MailType doesn\'t exist';
 
     protected $code = Response::HTTP_INTERNAL_SERVER_ERROR;
 }

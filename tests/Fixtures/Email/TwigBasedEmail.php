@@ -11,7 +11,5 @@ class TwigBasedEmail extends AbstractMailType
 {
     use TwigBased;
 
-    protected string $subject = 'test_email.subject';
-
-    protected string $body = 'test_email.body';
+    protected string $translationKeyPath = 'test_email';
 }

@@ -19,12 +19,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('translation_domain')
                     ->defaultValue('MailTemplateBundle')
                 ->end()
-                ->scalarNode('email_base_template')
-                    ->defaultValue('@MailTemplateBundle/mail/base_template.html.twig')
-                ->end()
-                ->scalarNode('email_base_css_template')
-                    ->defaultValue(__DIR__ . '/../Resources/views/mail/email.css')
-                ->end()
             ->end();
 
         return $treeBuilder;

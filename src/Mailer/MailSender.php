@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Schvoy\MailTemplateBundle\Mailer;
 
+use Exception;
 use Schvoy\MailTemplateBundle\DependencyInjection\MailTemplateExtension;
 use Schvoy\MailTemplateBundle\Exceptions\MailTypeNotFoundException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -14,7 +15,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MailSender
 {
-    private const string DEFAULT_LOCALE = 'en';
     private array $mailTypes = [];
 
     public function __construct(
@@ -38,23 +38,71 @@ class MailSender
         $this->mailTypes[get_class($mailType)] = $mailType;
     }
 
-    public function send(MailTypeInterface $mailType, array $recipients = [], array $configuration = []): void
-    {
+    /**
+     * @param Recipient[] $recipients
+     */
+    public function send(
+        MailTypeInterface $mailType,
+        array $recipients = [],
+        ?callable $extendConfiguration = null,
+        ?callable $extendEmail = null,
+    ): void {
         if (count($recipients) === 0) {
             return;
         }
 
-        /** @var Recipient $recipient */
+        $to = [];
+        $cc = [];
+        $bcc = [];
+
         foreach ($recipients as $recipient) {
-            $email = $this->getEmail($mailType, $recipient, $configuration);
+            if (!$recipient->isCc() && !$recipient->isBcc()) {
+                $to[] = $recipient;
+                continue;
+            }
+
+            if ($recipient->isCc()) {
+                $cc[] = $recipient;
+            }
+
+            if ($recipient->isBcc()) {
+                $bcc[] = $recipient;
+            }
+        }
+
+        if (count($to) === 0) {
+            throw new Exception('At least one recipient is required.');
+        }
+
+        foreach ($to as $recipient) {
+            $email = $this->getEmail($mailType, $recipient, $extendConfiguration);
+
+            foreach ($cc as $ccRecipient) {
+                $email->addCc(new Address($ccRecipient->getEmail(), $ccRecipient->getName() ?? ''));
+            }
+
+            foreach ($bcc as $bccRecipient) {
+                $email->addBcc(new Address($bccRecipient->getEmail(), $bccRecipient->getName() ?? ''));
+            }
+
+            if ($extendEmail) {
+                $extendEmail($email);
+            }
 
             $this->mailer->send($email);
         }
     }
 
-    protected function getEmail(MailTypeInterface $mailType, Recipient $recipient, array $configuration): Email
-    {
-        $configuration = $this->getEmailConfiguration($mailType, $recipient, $configuration);
+    protected function getEmail(
+        MailTypeInterface $mailType,
+        Recipient $recipient,
+        ?callable $extendConfiguration = null,
+    ): Email {
+        $configuration = $this->getEmailConfiguration($mailType, $recipient);
+
+        if ($extendConfiguration) {
+            $extendConfiguration($configuration);
+        }
 
         $email = (new Email())
             ->from(
@@ -66,10 +114,10 @@ class MailSender
             ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))
             ->subject(
                 $this->translator->trans(
-                    $mailType->getSubject(),
-                    $configuration['parameters'],
-                    $configuration['__translationDomain'],
-                    $configuration['__locale']
+                    sprintf('%s.subject', $mailType->getTranslationKeyPath()),
+                    $configuration->getParameters(),
+                    $configuration->getTranslationDomain(),
+                    $configuration->getLocale()
                 )
             )
             ->html($mailType->getContent($configuration));
@@ -79,26 +127,19 @@ class MailSender
 
     protected function getEmailConfiguration(
         MailTypeInterface $mailType,
-        Recipient $recipient,
-        array $configuration = []
-    ): array {
-        return array_replace_recursive(
-            [
-                '__greeting' => true,
-                '__signature' => true,
-                '__userName' => $recipient->getName() ?? false,
-                '__mailType' => $mailType,
-                '__translationDomain' => $this->parameterBag->get(
-                    sprintf('%s.%s', MailTemplateExtension::ALIAS, 'translation_domain')
-                ),
-                '__locale' => self::DEFAULT_LOCALE,
-                'parameters' => [
-                    '%userName%' => $recipient->getName(),
-                    '%signatory%' => $this->parameterBag->get('mailer_signatory'),
-                ],
-            ],
-            $mailType->getConfiguration(),
-            $configuration
+        Recipient $recipient
+    ): Configuration {
+        $configuration = new Configuration();
+        $configuration->setMailType($mailType);
+        $configuration->setTranslationDomain(
+            $this->parameterBag->get(
+                sprintf('%s.%s', MailTemplateExtension::ALIAS, 'translation_domain')
+            )
         );
+        $configuration->addParameter('_greetingNameExist_', (bool) $recipient->getName());
+        $configuration->addParameter('%userName%', $recipient->getName());
+        $configuration->addParameter('%signatory%', $this->parameterBag->get('mailer_signatory'));
+
+        return $configuration;
     }
 }

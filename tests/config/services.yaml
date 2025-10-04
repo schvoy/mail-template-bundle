@@ -1,7 +1,7 @@
 parameters:
     env(DB_ENGINE): 'pdo_sqlite'
     env(DB_HOST): 'localhost'
-    env(DB_NAME): 'core_test'
+    env(DB_NAME): 'mail_template_bundle_test'
     env(DB_USER): 'root'
     env(DB_PASSWD): ''
     env(DB_MEMORY): 'true'

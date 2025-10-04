@@ -1,0 +1,58 @@
+<mjml>
+    <mj-head>
+        <mj-title>{{- _self.getText(configuration, 'subject') -}}</mj-title>
+    </mj-head>
+    <mj-body>
+        <mj-hero>{{ _self.getText(configuration,'subject') }}</mj-hero>
+        <mj-section>
+            <mj-raw>
+                {% if configuration.greeting is defined and configuration.greeting is not same as (false) %}
+            </mj-raw>
+                <mj-column width="600px">
+                    <mj-text align="center">
+                            {% if configuration.parameters._greetingNameExist_ is not same as (false) %}
+                                <h1>{{ 'email.greeting' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
+                            {% else %}
+                                <h1>{{ 'email.greeting_unknown_user' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
+                            {% endif %}
+                    </mj-text>
+                </mj-column>
+            <mj-raw>
+                {% endif %}
+            </mj-raw>
+
+            <mj-column width="600px">
+                <mj-text>{{ _self.getText(configuration, 'body', true) }}</mj-text>
+            </mj-column >
+
+            <mj-raw>
+                {% if configuration.parameters._ctaLink_ is defined %}
+            </mj-raw>
+                <mj-column width="600px">
+                        <mj-button href="{{ configuration.parameters._ctaLink_ }}">{{ _self.getText(configuration, 'cta') }}</mj-button>
+                </mj-column>
+            <mj-raw>
+                {% endif %}
+            </mj-raw>
+
+            <mj-raw>
+                {% if configuration.signature is defined and configuration.signature is not same as (false) %}
+            </mj-raw>
+                <mj-column width="600px">
+                    <mj-text>{{ 'email.signature' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</mj-text>
+                </mj-column>
+            <mj-raw>
+                {% endif %}
+            </mj-raw>
+            <mj-raw>
+                {%- macro getText(configuration, key, isRaw = false) -%}
+                    {%- if isRaw is same as (true) -%}
+                        {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) | raw -}}
+                    {%- else -%}
+                        {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) -}}
+                    {%- endif -%}
+                {%- endmacro -%}
+            </mj-raw>
+        </mj-section>
+    </mj-body>
+</mjml>

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0
+
+* Introduce a new `Configuration` class instead of configuration array 
+* Improve `MailSender` with `$extendConfiguration` and `$extendEmail` callback options to allow more option for customization 
+* Rework `TwigBased` trait
+* Add mjml base template to generate more standard email base templates
+* Remove `email_base_template` configuration option, to use Symfony template overriding (the right way)
+* Remove `email_base_css_template` configuration option, to remove extra unnecessary dependency
+* Remove dependency `tijsverkoyen/css-to-inline-styles`
+* Add support for cc and bcc emails
+* Add additional tests
+
 ## 0.7.0
 
 * Move repository from eightmarq/mail-template-bundle to schvoy/mail-template-bundle
