@@ -6,9 +6,9 @@ namespace Schvoy\MailTemplateBundle\Mailer;
 
 interface MailTypeInterface
 {
-    public function getTranslationKeyPath(): string;
+    public function getKey(): string;
 
-    public function setTranslationKeyPath(string $translationKeyPath): void;
+    public function setKey(string $key): void;
 
     public function getContent(Configuration $configuration): string;
 }

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Schvoy\MailTemplateBundle\Tests\Fixtures\Email;
 
 use Schvoy\MailTemplateBundle\Mailer\AbstractMailType;
-use Schvoy\MailTemplateBundle\Mailer\Engine\TwigBased;
+use Schvoy\MailTemplateBundle\Mailer\Engine\DoctrineBased;
 
-class TwigBasedEmail extends AbstractMailType
+class DoctrineBasedEmail extends AbstractMailType
 {
-    use TwigBased;
+    use DoctrineBased;
 
     protected string $key = 'test_email';
 }

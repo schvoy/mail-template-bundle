@@ -17,6 +17,8 @@ services:
         autowire: true
         autoconfigure: true
 
+    Twig\Extension\StringLoaderExtension:
+
     Schvoy\MailTemplateBundle\Tests\Services\:
         resource: '../Services/'
 

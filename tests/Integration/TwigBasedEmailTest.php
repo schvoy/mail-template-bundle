@@ -46,7 +46,7 @@ class TwigBasedEmailTest extends AbstractTestCase
         $this->assertEquals('Test BCC user', $bcc->getName());
         $this->assertEquals('This is a test email', $email->getSubject());
         $this->assertStringContainsString('<title>This is a test email</title>', $body);
-        $this->assertStringContainsString('<h1>Welcome Test user!</h1>', $body);
+        $this->assertStringContainsString('<h1>Dear Test user,</h1>', $body);
         $this->assertStringContainsString('Content of the test email.', $body);
         $this->assertStringContainsString('Regards: Mail signatory', $body);
     }
@@ -87,7 +87,7 @@ class TwigBasedEmailTest extends AbstractTestCase
         $this->assertEquals('Test BCC user', $bcc->getName());
         $this->assertEquals('This is a test email', $email->getSubject());
         $this->assertStringContainsString('<title>This is a test email</title>', $body);
-        $this->assertStringContainsString('<h1>Welcome Test user!</h1>', $body);
+        $this->assertStringContainsString('<h1>Dear Test user,</h1>', $body);
         $this->assertStringContainsString('Content of the test email.', $body);
         $this->assertStringContainsString('Regards: Mail signatory', $body);
     }
@@ -129,7 +129,7 @@ class TwigBasedEmailTest extends AbstractTestCase
         $this->assertEquals('Test BCC user', $bcc->getName());
         $this->assertEquals('This is a test email', $email->getSubject());
         $this->assertStringContainsString('<title>This is a test email</title>', $body);
-        $this->assertStringNotContainsString('<h1>Welcome Test user!</h1>', $body);
+        $this->assertStringNotContainsString('<h1>Dear Test user,</h1>', $body);
         $this->assertStringContainsString('Content of the test email.', $body);
         $this->assertStringNotContainsString('Regards: Mail signatory', $body);
     }

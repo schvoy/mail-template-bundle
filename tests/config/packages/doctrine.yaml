@@ -14,3 +14,6 @@ doctrine:
                 type: attribute
                 dir: '../tests/Fixtures/Entity'
                 prefix: 'Schvoy\MailTemplateBundle\Tests\Fixtures\Entity\'
+
+        resolve_target_entities:
+            Schvoy\MailTemplateBundle\MailTemplateEntityInterface: Schvoy\MailTemplateBundle\Tests\Fixtures\Entity\Email

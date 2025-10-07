@@ -45,11 +45,11 @@
                 {% endif %}
             </mj-raw>
             <mj-raw>
-                {%- macro getText(configuration, key, isRaw = false) -%}
+                {%- macro getText(configuration, part, isRaw = false) -%}
                     {%- if isRaw is same as (true) -%}
-                        {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) | raw -}}
+                        {{- (configuration.mailType.key ~ '.' ~ part) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) | raw -}}
                     {%- else -%}
-                        {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) -}}
+                        {{- (configuration.mailType.key ~ '.' ~ part) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) -}}
                     {%- endif -%}
                 {%- endmacro -%}
             </mj-raw>

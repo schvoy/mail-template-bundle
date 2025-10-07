@@ -11,6 +11,7 @@
 * Remove dependency `tijsverkoyen/css-to-inline-styles`
 * Add support for cc and bcc emails
 * Add additional tests
+* Add Doctrine based email types support
 
 ## 0.7.0
 
@@ -47,6 +48,6 @@
 
 ## 0.5.0
 
-* Add Twig based email types 
+* Add Twig based email types support
 * Add basic email template layout 
 * Add convert css file to inline css for emails 

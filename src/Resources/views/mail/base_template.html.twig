@@ -175,7 +175,7 @@
                   </tbody>
                 </table>
               </div>
-              <!--[if mso | IE]></td><![endif]--> {% endif %}{%- macro getText(configuration, key, isRaw = false) -%} {%- if isRaw is same as (true) -%} {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) | raw -}} {%- else -%} {{- (configuration.mailType.translationKeyPath ~ '.' ~ key) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) -}} {%- endif -%} {%- endmacro -%} <!--[if mso | IE]></tr></table><![endif]-->
+              <!--[if mso | IE]></td><![endif]--> {% endif %}{%- macro getText(configuration, part, isRaw = false) -%} {%- if isRaw is same as (true) -%} {{- (configuration.mailType.key ~ '.' ~ part) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) | raw -}} {%- else -%} {{- (configuration.mailType.key ~ '.' ~ part) | trans(configuration.parameters, configuration.translationDomain, configuration.locale) -}} {%- endif -%} {%- endmacro -%} <!--[if mso | IE]></tr></table><![endif]-->
             </td>
           </tr>
         </tbody>

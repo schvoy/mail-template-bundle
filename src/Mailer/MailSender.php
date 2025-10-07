@@ -114,7 +114,7 @@ class MailSender
             ->to(new Address($recipient->getEmail(), $recipient->getName() ?? ''))
             ->subject(
                 $this->translator->trans(
-                    sprintf('%s.subject', $mailType->getTranslationKeyPath()),
+                    sprintf('%s.subject', $mailType->getKey()),
                     $configuration->getParameters(),
                     $configuration->getTranslationDomain(),
                     $configuration->getLocale()

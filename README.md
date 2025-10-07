@@ -1,6 +1,9 @@
 # Mail template bundle
 
-Mail template bundle helps to build and send emails from different source (Twig or Database).
+Mail template bundle helps to build and send emails from different sources: 
+    
+    - Twig 
+    - Database via Doctrine
 
 ## Installation
 
@@ -10,24 +13,27 @@ Mail template bundle helps to build and send emails from different source (Twig 
 composer require schvoy/mail-template-bundle
 ```
 
-### Define the required environment variables
+### Required environment variables
 
 * MAILER_SENDER_ADDRESS
 * MAILER_SENDER_NAME
 * MAILER_SIGNATORY
 
-## Usage
+## What is MailType?
 
-### Twig based emails
+Imagine `MailTypes` as different kind of emails such as: registration email, forgotten password email etc.
+
+For each type of emails that you want to send you need to create an individual `MailType`.
+
+For each `MailTypes` you could choose a base: TwigBased or DoctrineBased. These trait determines how get the content for the email.
+
+## TwigBased emails
                                     
-Twig based emails can be easily used to send translated emails with a custom design. 
+A `TwigBased` emails can be easily used to send translated emails with a custom template. 
 
 #### Creating new twig based email type
 
-You just need to create your own `MailType`. Imagine `MailTypes` as different kind of emails such as: registration email, forgotten password email etc.
-For each type of emails that you want to send you need to create a new `MailType`.
-
-Twig based emails will automatically populated based on the `$translationKeyPath` value.
+Twig based emails will automatically populated based on the `$key` value.
 
 ```php
 <?php
@@ -39,15 +45,15 @@ namespace App\Mails;
 use Schvoy\MailTemplateBundle\Mailer\AbstractMailType;
 use Schvoy\MailTemplateBundle\Mailer\Engine\TwigBased;
 
-class TestMailType extends AbstractMailType
+class TwigBasedEmail extends AbstractMailType
 {
     use TwigBased;
 
-    protected string $translationKeyPath = 'first_email.test';
+    protected string $key = 'first_email.test';
 }
 ```
 
-How should translation file should look líke for the `TestMailType`:
+How should the translation file should look líke for the `TwigBasedEmail`:
 
 ```yaml
 first_email: 
@@ -64,8 +70,7 @@ first_email:
 The bundle use a default email template from the bundle: `@MailTemplate/mail/base_template.html.twig`,
 which is generated via mjml.
 
-> You can also find the original mjml file here: `@MailTemplate/mail/base_template.html.twig.mjml`, 
-> so you can generate your own base template with mjml.
+> You can also find the original mjml file here: `@MailTemplate/mail/base_template.html.twig.mjml`, so you can generate your own base template with mjml.
 
 You have two options to override it:
 
@@ -75,7 +80,63 @@ You have two options to override it:
 
 2. In your `MailType` override the `getTemplatePath` with your desired template path
     
-   > With this option you can create more email templates to your project emails 
+   > With this option you can use different templates for each email in your project  
+
+### Doctrine based emails 
+
+Doctrine based emails can be easily used to send translated emails and managed dynamically from database.
+
+To use it you need to follow some configuration: 
+
+1. Implement `Schvoy\MailTemplateBundle\MailTemplateEntityInterface` as a new entity in your application
+
+    > You can find an example here: `Schvoy\MailTemplateBundle\Tests\Fixtures\Entity\Email`
+
+2. Resolve your entity as implementation of the interface in doctrine.yaml 
+
+    ```yaml
+    doctrine:
+        orm:
+            # ...
+            resolve_target_entities:
+                Schvoy\MailTemplateBundle\MailTemplateEntityInterface: <fqdn-to-your-entity>
+    ```
+
+3. Load StringLoaderExtension in services.yaml, which helps to load content from database into twig, and allows to store twig or html templates in database. 
+
+    ```yaml
+    services:
+       Twig\Extension\StringLoaderExtension:
+    ```
+
+#### Creating new DoctrineBased email type
+
+Similar to the TwigBased emails, the difference is only the used trait for this mail type. 
+
+During email content creation, this `DoctrineBased` trait takes the content from database based on the `key` and active status. 
+
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Mails;
+
+use Schvoy\MailTemplateBundle\Mailer\AbstractMailType;
+use Schvoy\MailTemplateBundle\Mailer\Engine\DoctrineBased;
+
+class DoctrineBasedEmail extends AbstractMailType
+{
+    use DoctrineBased;
+
+    protected string $key = 'test_email';
+}
+```
+
+#### Content handling
+
+Entity can contain a `templatePath` property, which will loaded as email content, 
+or you can define and store the whole content in database with the `content` property.
 
 ### Privileged parameters 
 
@@ -87,7 +148,7 @@ In the base `base_template.html.twig` has two privileged parameters:
 - `_ctaLink_` - To show or hide call to action button.
 - `_greetingNameExist_` - To show greeting with/without name if name parameters exists/not exitss
 
-#### Used conventions in `base_template.html.twig`
+#### Used parameter name conventions in `base_template.html.twig`
 
 - %<parameter-name>% - normal parameter name for translations - eg.: `%userName%`
 - _<parameter-name>_ - privileged parameter name for translations - eg.: `_ctaLink_`
@@ -99,7 +160,8 @@ In the base `base_template.html.twig` has two privileged parameters:
 use Schvoy\MailTemplateBundle\Mailer\Configuration;
 use Symfony\Component\Mime\Email;
 
-$testMail = $mailSender->getMailType(TestMailType::class);
+$testMail = $mailSender->getMailType(TwigBasedEmail::class);
+// $testMail = $mailSender->getMailType(DoctrineBasedEmail::class);
 
 $mailSender->send(
     $testMail,
@@ -133,7 +195,3 @@ $mailSender->send(
 mailer_template:
     translation_domain: <string>
 ```
-
-## TODO
-
-* Database based mail types

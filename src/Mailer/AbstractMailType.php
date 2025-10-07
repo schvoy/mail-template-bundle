@@ -6,15 +6,15 @@ namespace Schvoy\MailTemplateBundle\Mailer;
 
 abstract class AbstractMailType implements MailTypeInterface
 {
-    protected string $translationKeyPath;
+    protected string $key;
 
-    public function getTranslationKeyPath(): string
+    public function getKey(): string
     {
-        return $this->translationKeyPath;
+        return $this->key;
     }
 
-    public function setTranslationKeyPath(string $translationKeyPath): void
+    public function setKey(string $key): void
     {
-        $this->translationKeyPath = $translationKeyPath;
+        $this->key = $key;
     }
 }
