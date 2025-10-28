@@ -39,6 +39,10 @@ trait DoctrineBased
             throw new Exception(sprintf('There is no active database entry for %s', get_class($configuration->getMailType())));
         }
 
+        if(!$entity->getTemplatePath() && !$entity->getContent()) {
+            throw new Exception(sprintf('Content or templatePath is missing for %s', get_class($configuration->getMailType())));
+        }
+
         $template = $entity->getTemplatePath() ?? '@MailTemplate/mail/base_template.html.twig';
         $parameters = ['configuration' => $configuration];
 

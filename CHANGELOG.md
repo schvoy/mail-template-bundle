@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+* Improve READMA.md
+* Make mandatory one of `content` or `templatePath` for `MailTemplateEntityInterface`
+* Improve DoctrineBased tests
+
 ## 1.0.0
 
 * Introduce a new `Configuration` class instead of configuration array 

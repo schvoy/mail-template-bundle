@@ -25,13 +25,14 @@ Imagine `MailTypes` as different kind of emails such as: registration email, for
 
 For each type of emails that you want to send you need to create an individual `MailType`.
 
-For each `MailTypes` you could choose a base: TwigBased or DoctrineBased. These trait determines how get the content for the email.
+For each `MailTypes` you could choose a base: TwigBased or DoctrineBased. 
+These traits determine where should get the content for the email.
 
 ## TwigBased emails
                                     
 A `TwigBased` emails can be easily used to send translated emails with a custom template. 
 
-#### Creating new twig based email type
+### Creating new twig based email type
 
 Twig based emails will automatically populated based on the `$key` value.
 
@@ -65,28 +66,27 @@ first_email:
 
 > The bundle use by default the `MailTemplateBundle` translation domain
 
-#### Override default email template
+### Override default email template
 
 The bundle use a default email template from the bundle: `@MailTemplate/mail/base_template.html.twig`,
 which is generated via mjml.
 
-> You can also find the original mjml file here: `@MailTemplate/mail/base_template.html.twig.mjml`, so you can generate your own base template with mjml.
+> You can also find the original mjml file here: `@MailTemplate/mail/base_template.html.twig.mjml`, so you can generate your own base template with mjml. Check the [mjml project here](https://mjml.io/).
 
 You have two options to override it:
 
 1. With bundle template override in your application: https://symfony.com/doc/current/bundles/override.html#templates
+   Make your own template for the following path: 'templates/bundles/MailTemplateBundle/mail/base_template.html.twig'
 
-   > Make your own template for the following path: 'templates/bundles/MailTemplateBundle/mail/base_template.html.twig'
 
-2. In your `MailType` override the `getTemplatePath` with your desired template path
-    
-   > With this option you can use different templates for each email in your project  
+2. In your `MailType` you can override the `getTemplatePath` with your desired template path.
+   With this option you can use different templates for each email in your project  
 
-### Doctrine based emails 
+## Doctrine based emails 
 
 Doctrine based emails can be easily used to send translated emails and managed dynamically from database.
 
-To use it you need to follow some configuration: 
+### Configuration for Doctrine based emails 
 
 1. Implement `Schvoy\MailTemplateBundle\MailTemplateEntityInterface` as a new entity in your application
 
@@ -109,7 +109,7 @@ To use it you need to follow some configuration:
        Twig\Extension\StringLoaderExtension:
     ```
 
-#### Creating new DoctrineBased email type
+### Creating new DoctrineBased email type
 
 Similar to the TwigBased emails, the difference is only the used trait for this mail type. 
 
@@ -133,20 +133,21 @@ class DoctrineBasedEmail extends AbstractMailType
 }
 ```
 
-#### Content handling
+### Content handling
 
 Entity can contain a `templatePath` property, which will loaded as email content, 
 or you can define and store the whole content in database with the `content` property.
+One of them is mandatory.
 
-### Privileged parameters 
+## Privileged parameters 
 
 We call those parameters as privileged which are handled as not just a translation parameter during template rendering,
-but those are also used for control (show or hide) template parts. 
+but those are also used for control somehow (for example: show or hide) template parts. 
 
-In the base `base_template.html.twig` has two privileged parameters:
+In the base `base_template.html.twig` template has two privileged parameters:
 
 - `_ctaLink_` - To show or hide call to action button.
-- `_greetingNameExist_` - To show greeting with/without name if name parameters exists/not exitss
+- `_greetingNameExist_` - To show greeting with/without name if name parameters exists/not exists
 
 #### Used parameter name conventions in `base_template.html.twig`
 
