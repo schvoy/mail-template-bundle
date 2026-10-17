@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Schvoy\MailTemplateBundle\Tests\Integration;
 
 use Exception;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Schvoy\MailTemplateBundle\Mailer\Configuration;
 use Schvoy\MailTemplateBundle\Mailer\MailSender;
 use Schvoy\MailTemplateBundle\Mailer\Recipient;
@@ -13,6 +14,10 @@ use Schvoy\MailTemplateBundle\Tests\Fixtures\Email\TwigBasedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 class TwigBasedEmailTest extends AbstractTestCase
 {
     public function testTwigBasedEmailWithoutConfiguration(): void

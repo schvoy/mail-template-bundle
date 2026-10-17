@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Schvoy\MailTemplateBundle\Tests\Integration;
 
 use Exception;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use Schvoy\MailTemplateBundle\Mailer\Configuration;
 use Schvoy\MailTemplateBundle\Mailer\MailSender;
 use Schvoy\MailTemplateBundle\Mailer\Recipient;
@@ -13,6 +14,10 @@ use Schvoy\MailTemplateBundle\Tests\AbstractTestCase;
 use Schvoy\MailTemplateBundle\Tests\Fixtures\Email\DoctrineBasedEmail;
 use Schvoy\MailTemplateBundle\Tests\Fixtures\Entity\Email;
 
+/**
+ * @internal
+ */
+#[CoversNothing]
 class DoctrineBasedEmailTest extends AbstractTestCase
 {
     public function testDoctrineBasedEmailUsedEntityContent(): void
@@ -21,9 +26,9 @@ class DoctrineBasedEmailTest extends AbstractTestCase
         $entity->setKey('test_email');
         $entity->setStatus(MailTemplateEntityInterface::STATUS_ACTIVE);
         $entity->setContent(
-            <<<TWIG
-            <h1>{{ 'email.greeting' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
-        TWIG
+            <<<'TWIG'
+                    <h1>{{ 'email.greeting' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
+                TWIG
         );
 
         $this->entityManager->persist($entity);
@@ -167,9 +172,9 @@ class DoctrineBasedEmailTest extends AbstractTestCase
         $entity->setKey('test_email');
         $entity->setStatus(MailTemplateEntityInterface::STATUS_INACTIVE);
         $entity->setContent(
-            <<<TWIG
-            <h1>{{ 'email.greeting' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
-        TWIG
+            <<<'TWIG'
+                    <h1>{{ 'email.greeting' | trans(configuration.parameters, configuration.translationDomain, configuration.locale) }}</h1>
+                TWIG
         );
 
         $this->entityManager->persist($entity);

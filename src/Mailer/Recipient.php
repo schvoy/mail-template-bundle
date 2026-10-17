@@ -8,13 +8,13 @@ class Recipient
 {
     public function __construct(
         private readonly string $email,
-        private readonly ?string $name = null,
+        private readonly string|null $name = null,
         private readonly bool $cc = false,
         private readonly bool $bcc = false,
     ) {
     }
 
-    public function getName(): ?string
+    public function getName(): string|null
     {
         return $this->name;
     }

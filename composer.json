@@ -18,19 +18,20 @@
         "psr-4": { "Schvoy\\MailTemplateBundle\\Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=8.3",
-        "symfony/framework-bundle": "^7.1",
-        "symfony/translation": "^7.1",
-        "symfony/twig-bundle": "^7.1",
-        "symfony/mailer": "^7.1",
+        "php": ">=8.4",
+        "symfony/framework-bundle": "^7.4",
+        "symfony/translation": "^7.4",
+        "symfony/twig-bundle": "^7.4",
+        "symfony/mailer": "^7.4",
         "schvoy/base-entity-bundle": "^1.0.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "symfony/var-exporter": "^7.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1",
         "friendsofphp/php-cs-fixer": "^3.58",
-        "symfony/yaml": "^7.1",
-        "symfony/runtime": "^7.1"
+        "symfony/yaml": "^7.4",
+        "symfony/runtime": "^7.4"
     },
     "scripts": {
         "before-commit": [

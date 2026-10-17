@@ -20,7 +20,7 @@ class MailSender
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ParameterBagInterface $parameterBag,
-        private readonly MailerInterface $mailer
+        private readonly MailerInterface $mailer,
     ) {
     }
 
@@ -44,10 +44,10 @@ class MailSender
     public function send(
         MailTypeInterface $mailType,
         array $recipients = [],
-        ?callable $extendConfiguration = null,
-        ?callable $extendEmail = null,
+        callable|null $extendConfiguration = null,
+        callable|null $extendEmail = null,
     ): void {
-        if (count($recipients) === 0) {
+        if (0 === count($recipients)) {
             return;
         }
 
@@ -70,7 +70,7 @@ class MailSender
             }
         }
 
-        if (count($to) === 0) {
+        if (0 === count($to)) {
             throw new Exception('At least one recipient is required.');
         }
 
@@ -96,7 +96,7 @@ class MailSender
     protected function getEmail(
         MailTypeInterface $mailType,
         Recipient $recipient,
-        ?callable $extendConfiguration = null,
+        callable|null $extendConfiguration = null,
     ): Email {
         $configuration = $this->getEmailConfiguration($mailType, $recipient);
 
@@ -104,7 +104,7 @@ class MailSender
             $extendConfiguration($configuration);
         }
 
-        $email = (new Email())
+        return new Email()
             ->from(
                 new Address(
                     $this->parameterBag->get('mailer_sender_address'),
@@ -121,13 +121,11 @@ class MailSender
                 )
             )
             ->html($mailType->getContent($configuration));
-
-        return $email;
     }
 
     protected function getEmailConfiguration(
         MailTypeInterface $mailType,
-        Recipient $recipient
+        Recipient $recipient,
     ): Configuration {
         $configuration = new Configuration();
         $configuration->setMailType($mailType);

@@ -1,8 +1,15 @@
 # Changelog
 
+## 1.1.0
+
+* Increase minimal PHP version to 8.4
+* Update package to support Symfony 7.4
+* Update .php-cs-fixer.dist.php config and apply the new configuration
+* Add symfony/var-exporter to dependency
+
 ## 1.0.1
 
-* Improve READMA.md
+* Improve README.md
 * Make mandatory one of `content` or `templatePath` for `MailTemplateEntityInterface`
 * Improve DoctrineBased tests
 
