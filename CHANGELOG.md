@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+* Allow Symfony 8.0+ in composer
+
 ## 1.1.0
 
 * Increase minimal PHP version to 8.4

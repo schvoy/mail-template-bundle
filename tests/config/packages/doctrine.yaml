@@ -8,6 +8,7 @@ doctrine:
         memory: '%env(bool:DB_MEMORY)%'
     orm:
         auto_mapping: true
+        enable_native_lazy_objects: true
         mappings:
             MailTemplateBundle:
                 is_bundle: true
