@@ -19,19 +19,19 @@
     },
     "require": {
         "php": ">=8.4",
-        "symfony/framework-bundle": "^7.4|^8.0",
-        "symfony/translation": "^7.4|^8.0",
-        "symfony/twig-bundle": "^7.4|^8.0",
-        "symfony/mailer": "^7.4|^8.0",
-        "schvoy/base-entity-bundle": "^1.1.3",
+        "symfony/framework-bundle": "^8.0",
+        "symfony/translation": "^8.0",
+        "symfony/twig-bundle": "^8.0",
+        "symfony/mailer": "^8.0",
+        "schvoy/base-entity-bundle": "^1.2",
         "twig/twig": "^3.0",
-        "symfony/var-exporter": "^7.4|^8.0"
+        "symfony/var-exporter": "^8.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1",
         "friendsofphp/php-cs-fixer": "^3.58",
-        "symfony/yaml": "^7.4|^8.0",
-        "symfony/runtime": "^7.4|^8.0"
+        "symfony/yaml": "^8.0",
+        "symfony/runtime": "^8.0"
     },
     "scripts": {
         "before-commit": [

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+
+* Drop Symfony 7.4 support
+* Remove deprecations
+
 ## 1.1.1
 
 * Allow Symfony 8.0+ in composer
